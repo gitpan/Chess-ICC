@@ -28,7 +28,7 @@ our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 our @EXPORT = qw(
 	
 );
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 
 # Preloaded methods go here.
@@ -40,9 +40,12 @@ sub games {
   my $content = get $url;
   my $tree = HTML::TreeBuilder->new_from_content($content);
 #  warn $tree;
-#  warn $content;
-  my $games = $tree->look_down('_tag' => 'h3');
-  warn Dumper($games);
+  warn $content;
+  my $h3 = $tree->look_down('_tag' => 'h3');
+  my $table = $tree->look_down('_tag' => 'table');
+  my @tr = $table->look_down('_tag' => 'tr');
+  warn "we have ", scalar @tr, " rows";
+#  warn Dumper($games);
 }
 
 1;
